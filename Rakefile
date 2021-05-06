@@ -6,7 +6,11 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["tests/**/*_test.rb"]
 end
 
-Rake::TestTask.new(:server) do |t|
+task :prod do
+  sh "ruby web.rb"
+end
+
+task :dev do
   sh "rerun 'bundle exec ruby web.rb'"
 end
 
