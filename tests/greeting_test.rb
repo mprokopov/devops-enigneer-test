@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require "../greeting.rb"
+require_relative "../greeting.rb"
 
 
 class TestUser < Minitest::Test

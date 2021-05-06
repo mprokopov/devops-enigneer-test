@@ -16,6 +16,8 @@ class User
   def validate
     raise ArgumentError.new("Name format in #{name} should be only the letters") unless name =~ /^[A-Za-z]+$/
     raise ArgumentError.new("Date of birth #{dob} should be a Date") unless dob.is_a? Date
+
+    raise ArgumentError.new("Date of birth #{dob} must be a date before the today date") if dob > Date.today
     true
   end
 

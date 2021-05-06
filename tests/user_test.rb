@@ -1,6 +1,6 @@
 require "minitest/autorun"
-require "../user_repository"
-require "../user"
+require_relative "../user_repository"
+require_relative "../user"
 
 
 class TestUser < Minitest::Test
@@ -47,6 +47,16 @@ class TestUser < Minitest::Test
   def test_validate_name
     assert_raises ArgumentError do
       User.new("nexus123", "1979-01-01")
+    end
+  end
+
+  def test_validate_birthday_greater_than_today
+    today = Date.new(2021,9,27)
+    Date.stub(:today, today) do
+      ex = assert_raises(ArgumentError) do
+        User.new("nexus", "2021-09-28")
+      end
+      assert_equal ex.message, "Date of birth 2021-09-28 must be a date before the today date"
     end
   end
 
