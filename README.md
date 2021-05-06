@@ -47,6 +47,8 @@ Requirements:
 
 This should spin up a web server on port `4567`
 
+The application uses sqlite3 database for the sake of simplicity
+
 ## Verify
 
 Save user
