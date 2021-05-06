@@ -70,9 +70,9 @@ Executes all tests from the tests folder
 `bundle exec rake`
 
 ## Development server
-Execute the following command to run development Sinatra server with automatic source reload
+Execute the following command to run development Sinatra server with automatic source reloading
 
-`APP_ENV=development bundle exec rake dev`
+`bundle exec rake dev`
 
 ## Deployment
 Skip testing and development dependencies during installation for the deployment.
