@@ -10,19 +10,21 @@ class User
     @dob = Date.parse(dob)
 
     validate
+    self
   end
 
   def validate
     raise ArgumentError.new("Name format in #{name} should be only the letters") unless name =~ /^[A-Za-z]+$/
     raise ArgumentError.new("Date of birth #{dob} should be a Date") unless dob.is_a? Date
+    true
   end
 
   def self.from_db(username)
-    raw_dob = UserRepository.get_dob(username)
+    dob = UserRepository.get_dob(username)
 
-    raise ArgumentError.new("User #{username} entry not found") unless raw_dob
+    raise ArgumentError.new("User #{username} entry not found") unless dob
 
-    new(username, raw_dob)
+    new(username, dob)
   end
 
   def save

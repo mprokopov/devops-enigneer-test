@@ -40,6 +40,10 @@ class TestUser < Minitest::Test
     }
   end
 
+  def test_validate_success
+      assert User.new("nexus", "1979-01-01").validate
+  end
+
   def test_validate_name
     assert_raises ArgumentError do
       User.new("nexus123", "1979-01-01")
