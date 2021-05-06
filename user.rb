@@ -1,5 +1,5 @@
 require 'date'
-require 'pry'
+Bundler.require(:default, ENV['APP_ENV'] || :default)
 require_relative './user_repository'
 
 class User

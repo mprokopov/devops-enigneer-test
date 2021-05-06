@@ -66,3 +66,8 @@ curl --location --request GET 'http://localhost:4567/hello/mprokopov'
 
 ## Unit tests
 `bundle exec ruby tests/*`
+
+## Deployment
+Skip testing and development dependencies during installation for the deployment.
+
+`bundle install --without test development`
