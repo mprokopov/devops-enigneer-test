@@ -65,7 +65,14 @@ curl --location --request GET 'http://localhost:4567/hello/mprokopov'
 ```
 
 ## Unit tests
-`bundle exec ruby tests/*`
+Executes all tests from the tests folder
+
+`bundle exec rake`
+
+## Development server
+Execute the following command to run development Sinatra server with automatic source reload
+
+`APP_ENV=development bundle exec rake server`
 
 ## Deployment
 Skip testing and development dependencies during installation for the deployment.
