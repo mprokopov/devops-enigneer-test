@@ -1,6 +1,6 @@
 require "minitest/autorun"
-require_relative "../user_repository"
-require_relative "../user"
+require_relative "../src/user_repository"
+require_relative "../src/user"
 
 
 class TestUser < Minitest::Test

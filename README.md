@@ -43,9 +43,9 @@ Requirements:
 - install dependencies using `bundle install` command
 
 ## Run
-`bundle exec ruby web.rb`
+`bundle exec rake prod`
 
-This should spin up a web server on port `4567`
+This should spin up the production web server on port `4567`
 
 The application uses sqlite3 database for the sake of simplicity
 

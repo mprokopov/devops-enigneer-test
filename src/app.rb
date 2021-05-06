@@ -1,9 +1,9 @@
 require 'sinatra'
 require 'rerun'
 require 'date'
-require './user'
-require './greeting'
-require './user_repository'
+require_relative './user'
+require_relative './greeting'
+require_relative './user_repository'
 
 UserRepository.schema
 

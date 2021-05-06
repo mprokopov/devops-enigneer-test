@@ -7,11 +7,13 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task :prod do
-  sh "ruby web.rb"
+  ENV['APP_ENV']="production"
+  sh "ruby src/app.rb"
 end
 
 task :dev do
-  sh "rerun 'bundle exec ruby web.rb'"
+  ENV['APP_ENV']="development"
+  sh "rerun 'bundle exec ruby src/app.rb'"
 end
 
 task :default => :test
