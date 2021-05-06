@@ -1,7 +1,7 @@
 require 'sqlite3'
 
 class UserRepository
-  DB = "test1.db"
+  DB = ENV['DB'] || "users.db"
 
   def self.schema
     db = SQLite3::Database.open DB
