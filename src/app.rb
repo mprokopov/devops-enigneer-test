@@ -7,6 +7,7 @@ require_relative './user_repository'
 
 UserRepository.schema
 
+set :bind, '0.0.0.0'
 set :port, ENV['PORT'] || 4567
 
 before do
