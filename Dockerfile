@@ -6,4 +6,3 @@ ADD src/ src
 RUN bundle install
 
 CMD ["/usr/local/bin/bundle","exec","ruby", "src/app.rb"]
-# CMD ["ls"]
