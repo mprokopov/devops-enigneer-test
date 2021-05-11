@@ -1,6 +1,6 @@
 - hosts: env_blue
   vars:
-    database_url: "___here_encrypted_database_connection_string___"
+    database_url: "__db_connection_string_encrypted__"
   tasks:
     - name: pull an image
       docker_image:
@@ -27,6 +27,21 @@
       add_host:
         name:   "nginx_new_ip_holder"
         ip:  "{{ private_ip_address }}"
+
+- hosts: app_nginx
+  become: true
+  tasks:
+    - set_fact: new_ip="{{hostvars['nginx_new_ip_holder']['ip']}}"
+    - debug: var=new_ip
+    - name: update nginx config
+      template:
+        src: default.j2
+        dest: /etc/nginx/nginx.conf
+
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded
 
 - hosts: env_green
   tasks:
@@ -57,18 +72,3 @@
         tags:
             deploy: "green"
         state: present
-
-- hosts: app_nginx
-  become: true
-  tasks:
-    - set_fact: new_ip="{{hostvars['nginx_new_ip_holder']['ip']}}"
-    - debug: var=new_ip
-    - name: update nginx config
-      template:
-        src: default.j2
-        dest: /etc/nginx/nginx.conf
-
-    - name: reload nginx
-      systemd:
-        name: nginx
-        state: reloaded
