@@ -4,3 +4,5 @@ run:
 	docker run --rm  -p 4567:4567 -e PORT=4567 mprokopov/devops-test-webserver
 bash:
 	docker run --rm -it mprokopov/devops-test-webserver bash
+push:
+	docker push mprokopov/devops-test-webserver

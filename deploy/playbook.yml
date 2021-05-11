@@ -1,0 +1,66 @@
+- hosts: env_blue
+  tasks:
+    - debug: var=public_ip_address
+    - name: Start a container with a command
+      docker_container:
+        name: webapp
+        image: mprokopov/devops-test-webserver
+        state: started
+        ports:
+          - 4567:4567
+    - uri: 
+        url: "http://{{private_ip_address}}:4567/health"
+        timeout: 5
+        return_content: yes
+      register: this
+      failed_when: "'Ok' not in this.content"
+
+    - name: store new green IP address
+      add_host:
+        name:   "nginx_new_ip_holder"
+        ip:  "{{ private_ip_address }}"
+
+- hosts: env_green
+  tasks:
+    - name: Start a container with a command
+      docker_container:
+        name: webapp
+        image: mprokopov/devops-test-webserver
+        state: stopped
+        ports:
+          - 4567:4567
+
+    - name: Remove all tags except for Name from an instance
+      delegate_to: localhost
+      amazon.aws.ec2_tag:
+        region: eu-central-1
+        resource: "{{instance_id}}"
+        tags:
+            deploy: "blue"
+        state: present
+
+- hosts: env_blue
+  tasks:
+    - name: Remove all tags except for Name from an instance
+      delegate_to: localhost
+      amazon.aws.ec2_tag:
+        region: eu-central-1
+        resource: "{{instance_id}}"
+        tags:
+            deploy: "green"
+        state: present
+
+- hosts: app_nginx
+  become: true
+  tasks:
+    - set_fact: new_ip="{{hostvars['nginx_new_ip_holder']['ip']}}"
+    - debug: var=new_ip
+    - name: update nginx config
+      template:
+        src: default.j2
+        dest: /etc/nginx/nginx.conf
+
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded

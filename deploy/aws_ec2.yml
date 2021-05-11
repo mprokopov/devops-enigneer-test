@@ -1,0 +1,13 @@
+plugin: aws_ec2
+aws_profile: mprokopov2
+tag:
+  Name:
+  - deploy1
+regions:
+  - eu-central-1
+instance-state-name : running
+keyed_groups:
+  - prefix: env
+    key: tags['deploy']
+  - prefix: app
+    key: tags['app']
