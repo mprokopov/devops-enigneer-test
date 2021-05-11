@@ -36,32 +36,31 @@ B. If username’s birthday is today:
 ```
 
 
-## Install
-Requirements: 
+## Requirements:
 - ruby 2.x interpeter
 - bundler, if necessary run `gem install bundler` to install bundler
 - install dependencies using `bundle install` command
 
-## Run
-`bundle exec rake prod`
+## Development
+`bundle exec rake dev`
 
 This should spin up the production web server on port `4567`
 
-The application uses sqlite3 database for the sake of simplicity
+The application uses MySQL compatible database 
 
 ## Verify
 
 Save user
 
 ```shell
-curl --location --request PUT 'http://localhost:4567/hello/mprokopov' \
+curl --location --request PUT 'http://ec2-52-59-45-54.eu-central-1.compute.amazonaws.com/hello/mprokopov' \
 --header 'Content-Type: application/json' \
 --data-raw '{ "dateOfBirth": "1979-01-03" }'
 ```
 
 Get user birthday
 ```shell
-curl --location --request GET 'http://localhost:4567/hello/mprokopov'
+curl --location --request GET 'http://ec2-52-59-45-54.eu-central-1.compute.amazonaws.com/hello/mprokopov'
 ```
 
 ## Unit tests
@@ -75,10 +74,20 @@ Execute the following command to run development Sinatra server with automatic s
 `bundle exec rake dev`
 
 ## Deployment
-Skip testing and development dependencies during installation for the deployment.
+Blue-Green deployment to the AWS EC2 instances is done using simple Ansible playbook.
 
-`bundle install --deployment`
+Execute the following command to deploy new version.
 
-Spin up server
+```shell
+ansible-playbook -i aws_ec2.yml playbook.yml
+```
 
-`APP_ENV=production bundle exec rake prod`
+### Deployment schema:
+
+The solution uses two nodes tagged as blue and green accordingly, database server and nginx as the webserver which points to the one of the nodes at a time.
+
+During the deployment ansible populates env_green and env_blue groups from AWS EC2 tags using aws_ec2 plugin and whenever blue deployment is successful it checks health of api endpoint and switches the node by updating nginx configuration.
+
+## Docker images
+
+Application is distributed in form of docker image.  Available at DockerHub `mprokopov/devops-test-webserver`
