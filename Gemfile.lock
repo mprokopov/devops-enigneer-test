@@ -10,6 +10,7 @@ GEM
     minitest (5.14.4)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    mysql2 (0.5.2)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -23,6 +24,7 @@ GEM
     rerun (0.13.1)
       listen (~> 3.0)
     ruby2_keywords (0.0.4)
+    sequel (5.44.0)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -36,9 +38,11 @@ PLATFORMS
 
 DEPENDENCIES
   minitest
+  mysql2
   pry
   rake
   rerun
+  sequel
   sinatra
   sqlite3
 

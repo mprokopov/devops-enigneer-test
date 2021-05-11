@@ -1,5 +1,5 @@
 require 'date'
-require_relative './user_repository'
+require_relative './user_repository_mysql'
 
 class User
   attr_reader :name, :dob

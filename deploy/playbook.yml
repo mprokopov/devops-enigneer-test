@@ -1,10 +1,18 @@
 - hosts: env_blue
+  vars:
+    database_url: "___here_encrypted_database_connection_string___"
   tasks:
-    - debug: var=public_ip_address
+    - name: pull an image
+      docker_image:
+        name: mprokopov/devops-test-webserver
+        force: yes
+
     - name: Start a container with a command
       docker_container:
         name: webapp
         image: mprokopov/devops-test-webserver
+        env:
+          DATABASE_URL: "{{ database_url }}"
         state: started
         ports:
           - 4567:4567
@@ -22,7 +30,7 @@
 
 - hosts: env_green
   tasks:
-    - name: Start a container with a command
+    - name: Stop a container with a command
       docker_container:
         name: webapp
         image: mprokopov/devops-test-webserver
