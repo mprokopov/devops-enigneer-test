@@ -1,8 +1,9 @@
 require "minitest/autorun"
+
+ENV['DATABASE_URL'] = "sqlite://test.db"
 require_relative "../src/user_repository_mysql"
 require_relative "../src/user"
 
-ENV['DATABASE_URL'] = "sqlite://test.db"
 
 class TestUser < Minitest::Test
   def test_days_till_birthday_this_year
