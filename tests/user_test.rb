@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "../src/user_repository"
+require_relative "../src/user_repository_mysql"
 require_relative "../src/user"
 
 
