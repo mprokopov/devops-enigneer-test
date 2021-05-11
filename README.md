@@ -76,11 +76,13 @@ Execute the following command to run development Sinatra server with automatic s
 ## Deployment
 Blue-Green deployment to the AWS EC2 instances is done using simple Ansible playbook.
 
-Execute the following command to deploy new version.
+Execute the following command to deploy new version from the *deploy* folder.
 
 ```shell
 ansible-playbook -i aws_ec2.yml playbook.yml
 ```
+
+The hosts preparation steps like installing docker, nginx, dependencies are skipped for the simplicity purposes.
 
 ### Deployment schema:
 
